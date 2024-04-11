@@ -1,0 +1,36 @@
+name: Update Mod Cache
+
+on:
+  workflow_dispatch:
+
+env:
+  CONFIGURATION: Release
+  PROJECT_FILE: "Internal.csproj"
+  WORKING_DIRECTORY: "Internal"
+  OUTPUT_PATH: "Output"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore dependencies
+      run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
+    - name: Build
+      run: dotnet build "${{ env.WORKING_DIRECTORY }}" --no-restore
+    - name: Run
+      run: dotnet run --project "${{ env.WORKING_DIRECTORY }}\${{ env.PROJECT_FILE }}" --no-build --configuration ${{ env.CONFIGURATION }} -- "${{ secrets.NEXUS_API_KEY }}"
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        branch: gh-pages
+        folder: "resources"
+        target-folder: "resources"
+        clean: false
+        token: ${{ secrets.GITHUB_TOKEN }}

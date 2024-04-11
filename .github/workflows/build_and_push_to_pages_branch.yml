@@ -1,0 +1,45 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: Build & Publish
+
+on:
+  push:
+    branches: [ "stable" ]
+    paths:
+      - Site/**
+  
+  workflow_dispatch:
+
+env:
+  OUTPUT_PATH: ./published
+  CONFIGURATION: Release
+  WORKING_DIRECTORY: "Site"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore dependencies
+      run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
+    - name: Build
+      run: dotnet build "${{ env.WORKING_DIRECTORY }}" --no-restore
+    - name: Test
+      run: dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build --verbosity normal
+    - name: Publish
+      run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        branch: gh-pages
+        folder: "Site/bin/Release/net8.0/publish/wwwroot"
+        clean-exclude: |
+            "resources/*/content-packs.json"
+        token: ${{ secrets.GITHUB_TOKEN }}

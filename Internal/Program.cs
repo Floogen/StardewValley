@@ -26,8 +26,9 @@ var nexusMods = new NexusMods(nexusModsApiKey, "stardewvalley");
 var fashionSenseContentPackIds = nexusMods.GetContentPacksFromMod(nexusMods.GetWebAddress(9969));
 
 // Cache the data for the Fashion Sense content packs
+Random r = new Random();
 #if DEBUG
 await nexusMods.CacheContentPackData(fashionSenseContentPackIds.ToList(), "..\\..\\..\\..\\Site\\wwwroot\\resources\\fashion-sense");
 #else
-await nexusMods.CacheContentPackData(fashionSenseContentPackIds.ToList(), Path.Combine("resources", "fashion-sense"));
+await nexusMods.CacheContentPackData(fashionSenseContentPackIds.OrderBy(x => r.Next()).Take(5).ToList(), Path.Combine("resources", "fashion-sense"));
 #endif

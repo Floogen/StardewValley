@@ -31,6 +31,17 @@ namespace Internal.Web
             return $"{BASE_API_ADDRESS}/{_gameName}/mods/{modId}.json";
         }
 
+        public async Task GetAndCacheContentPacks(int frameworkId, string outputPath)
+        {
+            // Get the content packs associated to the framework
+            Debug.WriteLine($"Grabbing content packs associated with the framework ID {frameworkId}...");
+            var contentPackIds = GetContentPacksFromMod(GetWebAddress(frameworkId));
+
+            // Cache the data for the content packs
+            Debug.WriteLine($"Caching {contentPackIds.Count} content packs associated with the framework ID {frameworkId}...");
+            await CacheContentPackData(contentPackIds, outputPath);
+        }
+
         public List<int> GetContentPacksFromMod(string url)
         {
             HtmlDocument doc = new HtmlWeb().Load(url);
@@ -108,6 +119,8 @@ namespace Internal.Web
                             LastUpdated = modInfo.LastUpdated,
                             CreatedTimestamp = modInfo.CreatedTimestamp
                         });
+
+                        Debug.WriteLine($"Successfully parsed [{modInfo.Name}] ({modId})");
                     }
                 }
             }
@@ -117,8 +130,10 @@ namespace Internal.Web
             {
                 Directory.CreateDirectory(targetFolder);
             }
-            Console.WriteLine($"Saving to {Path.Combine(Directory.GetCurrentDirectory(), targetFolder, "content-packs.json")}");
+            Debug.WriteLine($"Saving cache to the following output path: {Path.Combine(Directory.GetCurrentDirectory(), targetFolder, "content-packs.json")}");
             File.WriteAllText(Path.Combine(targetFolder, "content-packs.json"), JsonSerializer.Serialize(contentPacks, new JsonSerializerOptions() { WriteIndented = true }));
+
+            Debug.WriteLine($"Cached {contentPacks.Count} content packs!");
 
             client.Dispose();
         }

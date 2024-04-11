@@ -22,12 +22,13 @@ nexusModsApiKey = config["nexusModsApiKey"];
 // Establish the Nexus Mods link
 var nexusMods = new NexusMods(nexusModsApiKey, "stardewvalley");
 
-// Get the content packs associated to Fashion Sense
-var fashionSenseContentPackIds = nexusMods.GetContentPacksFromMod(nexusMods.GetWebAddress(9969));
 
-// Cache the data for the Fashion Sense content packs
+
+// Set the output path for Fashion Sense
+string fashionSenseOutputPath = Path.Combine("resources", "fashion-sense");
 #if DEBUG
-await nexusMods.CacheContentPackData(fashionSenseContentPackIds.ToList(), "..\\..\\..\\..\\Site\\wwwroot\\resources\\fashion-sense");
-#else
-await nexusMods.CacheContentPackData(fashionSenseContentPackIds.ToList(), Path.Combine("resources", "fashion-sense"));
+fashionSenseOutputPath = "..\\..\\..\\..\\Site\\wwwroot\\resources\\fashion-sense";
 #endif
+
+// Cache the content mod data for Fashion Sense
+await nexusMods.GetAndCacheContentPacks(9969, fashionSenseOutputPath);

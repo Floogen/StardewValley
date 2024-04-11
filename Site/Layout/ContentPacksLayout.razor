@@ -104,22 +104,38 @@
 
     public async Task RefreshContentPacks(string folderPath)
     {
-        // Get the content packs
-        var contentPacks = await Http.GetFromJsonAsync<List<ContentPack>>(Path.Combine(folderPath, "content-packs.json"));
-        if (contentPacks is null)
+        try
         {
-            // TODO: Log error
-            return;
-        }
-        ContentPacks = contentPacks;
+            string contentPacksPath = Path.Combine(folderPath, "content-packs.json");
+            string ignoredModsPath = Path.Combine(folderPath, "ignore-list.json");
 
-        var ignoredMods = await Http.GetFromJsonAsync<List<IgnoredMod>>(Path.Combine(folderPath, "ignore-list.json"));
-        if (ignoredMods is not null && ContentPacks is not null)
+            var contentPacks = await Http.GetFromJsonAsync<List<ContentPack>>(contentPacksPath);
+            if (contentPacks is null)
+            {
+                // TODO: Log error
+                return;
+            }
+            ContentPacks = contentPacks;
+
+            try
+            {
+                var ignoredMods = await Http.GetFromJsonAsync<List<IgnoredMod>>(Path.Combine(folderPath, "ignore-list.json"));
+                if (ignoredMods is not null && ContentPacks is not null)
+                {
+                    ContentPacks = ContentPacks.Where(c => ignoredMods is null || ignoredMods.Any(i => i.Id == c.Id) is false).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to skip ignored content packs: {ex}");
+            }
+
+            UpdateFilter();
+        }
+        catch (Exception ex)
         {
-            ContentPacks = ContentPacks.Where(c => ignoredMods is null || ignoredMods.Any(i => i.Id == c.Id) is false).ToList();
+            Console.WriteLine($"Failed to refresh content packs: {ex}");
         }
-
-        UpdateFilter();
     }
 
     private async Task ChangeSelectedPage(int pageNumber)

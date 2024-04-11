@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "Site",
   "resources": {
-    "hash": "sha256-0TeUjSYPTHKOT/Kqj/m2uico58kOD3mAohJY8QaGRoI=",
+    "hash": "sha256-+94axpqis4X8bI6ZrZ7mts/PHE6nFFRDxXolfIuSanE=",
     "jsModuleNative": {
       "dotnet.native.8.0.4.6vlmefabfv.js": "sha256-ju0+XWE0ihz554eKEj0HQ8Opa61xpbUIaX5/MNo8we4="
     },
@@ -17,10 +17,10 @@
       "icudt_no_CJK.dat": "sha256-L7sV7NEYP37/Qr2FPCePo5cJqRgTXRwGHuwF5Q+0Nfs="
     },
     "assembly": {
-      "Common.wasm": "sha256-kVJOd9KPfsjCdwM+REyC9Ryi2L7EDQ5k9I37LOJlrrU=",
+      "Common.wasm": "sha256-LZNatk8X4+qi/fHL4I/z/Vb/djOeCCf+RrorI4iG0YE=",
       "Microsoft.AspNetCore.Components.Forms.wasm": "sha256-mD/Kkid5kAbCd8FTvX7nRa1Zrwyztxc16j0tUjgwvKc=",
       "Microsoft.AspNetCore.Components.wasm": "sha256-GEGGgCbaLyBB9oqTJ6wg6PGv45w9vPcMwgI0bir/OH4=",
-      "Microsoft.AspNetCore.Components.Web.wasm": "sha256-Flb1MA0jlDHWOa+MWhfPuf24H2zsEl94XIedS3o+mtA=",
+      "Microsoft.AspNetCore.Components.Web.wasm": "sha256-YS9LMdOesxAsggTatCm6q5w4wrIPyt0JjegOtOOzPr4=",
       "Microsoft.AspNetCore.Components.WebAssembly.wasm": "sha256-3lk/351jh6AEHyfME1fgB4sLbGy6gh+Dx3eQMB3MCe0=",
       "Microsoft.Extensions.Configuration.Abstractions.wasm": "sha256-87sn2TYqgdZ95sXmavjKEzoEfMgHnYQ9LOvnMX+aZcI=",
       "Microsoft.Extensions.Configuration.Json.wasm": "sha256-Sxmy2ZS134URxbHEvdbS6NcQ3zXS7UWx/5ZPpwiW7FA=",
@@ -36,7 +36,7 @@
       "Microsoft.JSInterop.wasm": "sha256-LFEySM8Y7K8Po/tGNqDWegNpFEJRYBzDEHU1fNg3sD4=",
       "Microsoft.JSInterop.WebAssembly.wasm": "sha256-Kr13V+6zGL8rPvFmuBAsaEJfoMlR4Q8keJHKaVGVbGA=",
       "MudBlazor.wasm": "sha256-ruIB56qN15JbD+0G+ilk319BBqUXuisdsLihdFQbY4Y=",
-      "Site.wasm": "sha256-+jRnJXVpFqCNx2vsRp/oyHkqusK5hnFtjh463NXECzs=",
+      "Site.wasm": "sha256-cKmK+Hy9SkgDHNVtJWVf2HF8fn3UhCz//foLzRO2cf8=",
       "System.Collections.Concurrent.wasm": "sha256-6CO1pUZ9dmpw2QvoSfYgAmlRiQr0NfRYe8EWRl/qtfQ=",
       "System.Collections.Immutable.wasm": "sha256-yH9mgeQxVa7HY4WeMUCSA9hbSdA3qN82P/dLZsTRuMU=",
       "System.Collections.wasm": "sha256-psli2d3Z8wJN03aV3G1nQDM3b4Sq3BDOxj+0Mhndu44=",

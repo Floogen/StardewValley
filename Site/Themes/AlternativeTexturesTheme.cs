@@ -5,13 +5,13 @@ namespace Site.Themes
 {
     public class AlternativeTexturesTheme : BaseTheme
     {
-        private static MudColor _mainThemeColor = new MudColor("96897B");
-        private static MudColor _darkMainThemeColor = new MudColor("313638");
+        private static MudColor _mainThemeColor = new MudColor("807467");
+        private static MudColor _darkMainThemeColor = new MudColor("64605A");
         public AlternativeTexturesTheme()
         {
             Palette = new PaletteLight
             {
-                Background = new MudColor("DFD5A5"),
+                Background = new MudColor("4C4A46"),
                 Dark = new MudColor("979287"),
                 Surface = _mainThemeColor,
                 TextPrimary = Colors.Shades.White,
@@ -25,12 +25,13 @@ namespace Site.Themes
                 LinesInputs = Colors.Shades.White,
                 DrawerBackground = _mainThemeColor,
                 DrawerText = Colors.Shades.White,
+                Secondary = _mainThemeColor.ColorLighten(0.05),
                 Tertiary = _mainThemeColor.ColorLighten(0.3)
             };
 
             PaletteDark = new PaletteDark
             {
-                Background = new MudColor("96897B"),
+                Background = new MudColor("1F2224"),
                 Dark = new MudColor("018EAA"),
                 Surface = _darkMainThemeColor,
                 TextPrimary = Colors.Shades.White,
@@ -44,6 +45,7 @@ namespace Site.Themes
                 LinesInputs = Colors.Shades.White,
                 DrawerBackground = _darkMainThemeColor,
                 DrawerText = Colors.Shades.White,
+                Secondary = _darkMainThemeColor.ColorLighten(0.05),
                 Tertiary = _darkMainThemeColor.ColorLighten(0.3)
             };
         }

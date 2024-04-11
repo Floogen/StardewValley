@@ -1,6 +1,12 @@
 ﻿@page "/fashion-sense"
 @layout ContentPacksLayout
 
+<style>
+    .mud-input-control > .mud-input-control-input-container > .mud-input-label-inputcontrol {
+        color: @(Layout.MainLayout.GetCurrentPalette().TextSecondary) !important;
+    }
+</style>
+
 @code {
     [CascadingParameter]
     public ContentPacksLayout? Layout { get; set; }

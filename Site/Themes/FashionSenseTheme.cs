@@ -6,7 +6,7 @@ namespace Site.Themes
     public class FashionSenseTheme : BaseTheme
     {
         private static MudColor _mainThemeColor = new MudColor("FFB3C6");
-        private static MudColor _darkMainThemeColor = new MudColor("67B0F8");
+        private static MudColor _darkMainThemeColor = new MudColor("80A1D4");
         public FashionSenseTheme()
         {
             Palette = new PaletteLight
@@ -30,7 +30,7 @@ namespace Site.Themes
 
             PaletteDark = new PaletteDark
             {
-                Background = new MudColor("003294"),
+                Background = new MudColor("595758"),
                 Dark = new MudColor("018EAA"),
                 Surface = _darkMainThemeColor,
                 TextPrimary = Colors.Shades.White,

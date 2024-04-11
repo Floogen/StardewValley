@@ -66,7 +66,7 @@
                         }
                     </MudGrid>
                 </MudItem>
-                <MudPagination Class="pb-4" Style="position:relative; top:25px;" Rectangular="true" Variant="@(MainLayout!.IsDarkMode ? Variant.Outlined : Variant.Filled)" Count="@_pageToContentPacks.Keys.Count" SelectedChanged="@(e => ChangeSelectedPage(e - 1))" />
+                <MudPagination @ref="_mudPagination" Class="pb-4" Style="position:relative; top:25px;" Rectangular="true" Variant="@(MainLayout!.IsDarkMode ? Variant.Outlined : Variant.Filled)" Count="@_pageToContentPacks.Keys.Count" SelectedChanged="@(e => ChangeSelectedPage(e - 1))" />
             </MudGrid>
         </MudContainer>
         @Body
@@ -81,7 +81,8 @@
 
     private List<ContentPack> ContentPacks { get; set; } = new List<ContentPack>();
 
-    private MudScrollToTop _scrollToTop;
+    private MudScrollToTop _scrollToTop = default!;
+    private MudPagination _mudPagination = default!;
 
     private const int MAX_CONTENT_PACKS_PER_PAGE = 30;
     private Dictionary<int, List<ContentPack>> _pageToContentPacks = new Dictionary<int, List<ContentPack>>() { { 0, new List<ContentPack>() } };
@@ -149,6 +150,7 @@
     {
         _selectedPage = 0;
         _pageToContentPacks.Clear();
+        _mudPagination.NavigateTo(_selectedPage);
         if (ContentPacks is null)
         {
             // TODO: Log error

@@ -31,6 +31,17 @@ namespace Internal.Web
             return $"{BASE_API_ADDRESS}/{_gameName}/mods/{modId}.json";
         }
 
+        public async Task GetAndCacheContentPacks(int frameworkId, string outputPath)
+        {
+            // Get the content packs associated to the framework
+            Debug.WriteLine($"Grabbing content packs associated with the framework ID {frameworkId}...");
+            var contentPackIds = GetContentPacksFromMod(GetWebAddress(frameworkId));
+
+            // Cache the data for the content packs
+            Debug.WriteLine($"Caching {contentPackIds.Count} content packs associated with the framework ID {frameworkId}...");
+            await CacheContentPackData(contentPackIds, outputPath);
+        }
+
         public List<int> GetContentPacksFromMod(string url)
         {
             HtmlDocument doc = new HtmlWeb().Load(url);
@@ -68,7 +79,7 @@ namespace Internal.Web
             client.DefaultRequestHeaders.Add("Application-Version", "1.0.0");
             client.DefaultRequestHeaders.Add("User-Agent", $"Content Pack Check/1.0.0");
 
-            List<ContentPack> contentPacks = new List<ContentPack>();
+            ContentPacksData contentPacksData = new ContentPacksData() { Timestamp = DateTime.UtcNow };
             foreach (int modId in modIds)
             {
                 var response = await client.GetAsync(new Uri(GetApiAddress(modId)));
@@ -95,7 +106,7 @@ namespace Internal.Web
                         //string imageName = $"{modId}{Path.GetExtension(imageUrl.Segments.Last())}";
                         //await DownloadImage(client, modInfo.PictureUrl, Path.Combine(targetFolder, imageName));
 
-                        contentPacks.Add(new ContentPack()
+                        contentPacksData.ContentPacks.Add(new ContentPack()
                         {
                             Id = modId,
                             ModUrl = GetWebAddress(modId),
@@ -108,6 +119,8 @@ namespace Internal.Web
                             LastUpdated = modInfo.LastUpdated,
                             CreatedTimestamp = modInfo.CreatedTimestamp
                         });
+
+                        Debug.WriteLine($"Successfully parsed [{modInfo.Name}] ({modId})");
                     }
                 }
             }
@@ -117,8 +130,18 @@ namespace Internal.Web
             {
                 Directory.CreateDirectory(targetFolder);
             }
-            Console.WriteLine($"Saving to {Path.Combine(Directory.GetCurrentDirectory(), targetFolder, "content-packs.json")}");
-            File.WriteAllText(Path.Combine(targetFolder, "content-packs.json"), JsonSerializer.Serialize(contentPacks, new JsonSerializerOptions() { WriteIndented = true }));
+            Debug.WriteLine($"Saving cache to the following output path: {Path.Combine(Directory.GetCurrentDirectory(), targetFolder, "content-packs.json")}");
+
+            if (contentPacksData.ContentPacks.Count >= 0)
+            {
+                File.WriteAllText(Path.Combine(targetFolder, "content-packs.json"), JsonSerializer.Serialize(contentPacksData, new JsonSerializerOptions() { WriteIndented = true }));
+
+                Debug.WriteLine($"Cached {contentPacksData.ContentPacks.Count} content packs!");
+            }
+            else
+            {
+                Debug.WriteLine($"No content packs cached: List was empty!");
+            }
 
             client.Dispose();
         }

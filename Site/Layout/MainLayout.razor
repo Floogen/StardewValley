@@ -3,21 +3,22 @@
 @inject NavigationManager Navigation
 
 
-<MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="@_pageTheme" />
+<MudThemeProvider @bind-IsDarkMode="@IsDarkMode" Theme="@_pageTheme" />
 
 <MudLayout>
     <CascadingValue Value="this">
         <MudAppBar Elevation="1" Fixed="true">
             <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-            <MudText Typo="Typo.h5" Class="ml-3">
+            <MudSpacer />
+            <MudText Typo="Typo.h5">
                 <SectionOutlet SectionName="page-title" />
             </MudText>
             <MudSpacer />
-            <MudIconButton Icon="@(_isDarkMode ? Icons.Material.Filled.ModeNight : Icons.Material.Filled.BrightnessHigh)" Color="Color.Default" Edge="Edge.End" OnClick="@((e) => _isDarkMode = !_isDarkMode)" />
+            <MudIconButton Icon="@(IsDarkMode ? Icons.Material.Filled.ModeNight : Icons.Material.Filled.BrightnessHigh)" Color="Color.Default" Edge="Edge.End" OnClick="@((e) => IsDarkMode = !IsDarkMode)" />
         </MudAppBar>
         <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2" Variant="DrawerVariant.Temporary">
             <MudNavMenu Color="Color.Tertiary">
-                <MudNavGroup Title="Stardew Valley" Expanded="true">
+                <MudNavGroup Title="Stardew Valley" Expanded="true" HideExpandIcon="true">
                     <MudNavLink Href="alternative-textures">Alternative Textures</MudNavLink>
                     <MudNavLink Href="fashion-sense" >Fashion Sense</MudNavLink>
                 </MudNavGroup>
@@ -32,7 +33,8 @@
 @code {
     private MudTheme _pageTheme { get; set; }
     private bool _drawerOpen = false;
-    private bool _isDarkMode = true;
+
+    public bool IsDarkMode { get; set; } = true;
 
     protected override Task OnInitializedAsync()
     {
@@ -43,7 +45,7 @@
 
     public Palette GetCurrentPalette()
     {
-        return _isDarkMode ? _pageTheme.PaletteDark : _pageTheme.Palette;
+        return IsDarkMode ? _pageTheme.PaletteDark : _pageTheme.Palette;
     }
 
     public void SetTheme(MudTheme theme)

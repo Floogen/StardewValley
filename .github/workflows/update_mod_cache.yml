@@ -1,6 +1,9 @@
 name: Update Mod Cache
 
 on:
+  schedule:
+    - cron: '0 0 * * *'
+    - cron: '0 12 * * *'
   workflow_dispatch:
 
 env:

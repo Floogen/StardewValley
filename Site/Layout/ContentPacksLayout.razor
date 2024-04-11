@@ -1,6 +1,5 @@
 ﻿@inherits LayoutComponentBase
 @layout MainLayout
-@inject IJSRuntime JSRuntime;
 @inject IScrollManager ScrollManager
 @inject HttpClient Http
 @using Common.Models
@@ -43,7 +42,9 @@
                             {
                                 <div style="position:relative;">
                                     <MudCard title="@($"{contentPack.ModName} by {contentPack.Author}")" Style="width:325px; height:325px;" Class="ma-2">
-                                        <MudImage Width=325 Height=@(contentPack.ModName?.Length >= 50 ? 225 : 250) ObjectFit="ObjectFit.Contain" Src="@contentPack.ImagePath" Alt="..." Elevation="0" Class="rounded-lg" Style="@("background-color: " + MainLayout.GetCurrentPalette().Primary.ColorLighten(0.05))" @onmousedown="@(e => OpenPageInNewTab(contentPack.ModUrl))" />
+                                        <MudLink Href="@contentPack.ModUrl">
+                                            <MudImage Width=325 Height=@(contentPack.ModName?.Length >= 50 ? 225 : 250) ObjectFit="ObjectFit.Contain" Src="@contentPack.ImagePath" Alt="..." Elevation="0" Class="rounded-lg" Style="@("background-color: " + MainLayout.GetCurrentPalette().Primary.ColorLighten(0.05))" />
+                                        </MudLink>
                                         <MudText Align="Align.Center" Typo="Typo.subtitle2">@contentPack.ModName</MudText>
                                         <div Class="d-flex align-center justify-center">
                                             <MudIcon Icon="@Icons.Material.Outlined.AccountCircle" Size="Size.Small" />&nbsp;@(contentPack.Author)
@@ -208,16 +209,6 @@
         _sortMethod = sortMethod;
 
         UpdateFilter();
-    }
-
-    private async void OpenPageInNewTab(string? url)
-    {
-        if (string.IsNullOrEmpty(url))
-        {
-            return;
-        }
-
-        await JSRuntime.InvokeAsync<string>("open", new object[] { url });
     }
 }
 

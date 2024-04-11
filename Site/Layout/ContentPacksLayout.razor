@@ -71,6 +71,7 @@
         </MudContainer>
         @Body
     </CascadingValue>
+    <MudText Color="Color.Secondary" Class="mt-8" Style="display: table; text-align: center; margin-left: auto; margin-right: auto;" Typo="Typo.caption" Align="Align.Center">@($"Last Updated: {(_contentPackGrabTimestamp is null ? "Unknown" : _contentPackGrabTimestamp.ToString())}")</MudText>
 </MudLayout>
 
 @code {
@@ -79,7 +80,8 @@
 
     public string Title { get; set; } = "Template";
 
-    private List<ContentPack> ContentPacks { get; set; } = new List<ContentPack>();
+    private DateTime? _contentPackGrabTimestamp { get; set; }
+    private List<ContentPack> _contentPacks { get; set; } = new List<ContentPack>();
 
     private MudScrollToTop _scrollToTop = default!;
     private MudPagination _mudPagination = default!;
@@ -111,20 +113,21 @@
             string contentPacksPath = Path.Combine(folderPath, "content-packs.json");
             string ignoredModsPath = Path.Combine(folderPath, "ignore-list.json");
 
-            var contentPacks = await Http.GetFromJsonAsync<List<ContentPack>>(contentPacksPath);
-            if (contentPacks is null)
+            var contentPacksData = await Http.GetFromJsonAsync<ContentPacksData>(contentPacksPath);
+            if (contentPacksData is null)
             {
                 // TODO: Log error
                 return;
             }
-            ContentPacks = contentPacks;
+            _contentPackGrabTimestamp = contentPacksData.Timestamp;
+            _contentPacks = contentPacksData.ContentPacks;
 
             try
             {
                 var ignoredMods = await Http.GetFromJsonAsync<List<IgnoredMod>>(Path.Combine(folderPath, "ignore-list.json"));
-                if (ignoredMods is not null && ContentPacks is not null)
+                if (ignoredMods is not null && _contentPacks is not null)
                 {
-                    ContentPacks = ContentPacks.Where(c => ignoredMods is null || ignoredMods.Any(i => i.Id == c.Id) is false).ToList();
+                    _contentPacks = _contentPacks.Where(c => ignoredMods is null || ignoredMods.Any(i => i.Id == c.Id) is false).ToList();
                 }
             }
             catch (Exception ex)
@@ -151,14 +154,14 @@
         _selectedPage = 0;
         _pageToContentPacks.Clear();
         _mudPagination.NavigateTo(_selectedPage);
-        if (ContentPacks is null)
+        if (_contentPacks is null)
         {
             // TODO: Log error
             return;
         }
 
         // Sort the content packs
-        var sortedContentPacks = SortContentPacksByMethod(ContentPacks.Where(c => c.HasAdultContent is false).Where(c => string.IsNullOrEmpty(_searchText) || string.IsNullOrEmpty(c.ModName) || c.ModName.Contains(_searchText, StringComparison.OrdinalIgnoreCase)));
+        var sortedContentPacks = SortContentPacksByMethod(_contentPacks.Where(c => c.HasAdultContent is false).Where(c => string.IsNullOrEmpty(_searchText) || string.IsNullOrEmpty(c.ModName) || c.ModName.Contains(_searchText, StringComparison.OrdinalIgnoreCase)));
 
         // Iterate through the sorted packs
         int currentPage = 0;

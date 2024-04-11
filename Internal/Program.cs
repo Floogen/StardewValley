@@ -27,7 +27,7 @@ var fashionSenseContentPackIds = nexusMods.GetContentPacksFromMod(nexusMods.GetW
 
 // Cache the data for the Fashion Sense content packs
 #if DEBUG
-await nexusMods.CacheContentPackData(fashionSenseContentPackIds.Take(10).ToList(), "..\\..\\..\\..\\Site\\wwwroot\\resources\\fashion-sense");
+await nexusMods.CacheContentPackData(fashionSenseContentPackIds.ToList(), "..\\..\\..\\..\\Site\\wwwroot\\resources\\fashion-sense");
 #else
-await nexusMods.CacheContentPackData(fashionSenseContentPackIds.Take(10).ToList(), Path.Combine("resources", "fashion-sense"));
+await nexusMods.CacheContentPackData(fashionSenseContentPackIds.ToList(), Path.Combine("resources", "fashion-sense"));
 #endif

@@ -3,7 +3,7 @@
 @inject NavigationManager Navigation
 
 
-<MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="@_pageTheme" />
+<MudThemeProvider @bind-IsDarkMode="@IsDarkMode" Theme="@_pageTheme" />
 
 <MudLayout>
     <CascadingValue Value="this">
@@ -13,7 +13,7 @@
                 <SectionOutlet SectionName="page-title" />
             </MudText>
             <MudSpacer />
-            <MudIconButton Icon="@(_isDarkMode ? Icons.Material.Filled.ModeNight : Icons.Material.Filled.BrightnessHigh)" Color="Color.Default" Edge="Edge.End" OnClick="@((e) => _isDarkMode = !_isDarkMode)" />
+            <MudIconButton Icon="@(IsDarkMode ? Icons.Material.Filled.ModeNight : Icons.Material.Filled.BrightnessHigh)" Color="Color.Default" Edge="Edge.End" OnClick="@((e) => IsDarkMode = !IsDarkMode)" />
         </MudAppBar>
         <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2" Variant="DrawerVariant.Temporary">
             <MudNavMenu Color="Color.Tertiary">
@@ -32,7 +32,8 @@
 @code {
     private MudTheme _pageTheme { get; set; }
     private bool _drawerOpen = false;
-    private bool _isDarkMode = true;
+
+    public bool IsDarkMode { get; set; } = true;
 
     protected override Task OnInitializedAsync()
     {
@@ -43,7 +44,7 @@
 
     public Palette GetCurrentPalette()
     {
-        return _isDarkMode ? _pageTheme.PaletteDark : _pageTheme.Palette;
+        return IsDarkMode ? _pageTheme.PaletteDark : _pageTheme.Palette;
     }
 
     public void SetTheme(MudTheme theme)

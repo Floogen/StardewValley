@@ -79,7 +79,7 @@ namespace Internal.Web
             client.DefaultRequestHeaders.Add("Application-Version", "1.0.0");
             client.DefaultRequestHeaders.Add("User-Agent", $"Content Pack Check/1.0.0");
 
-            List<ContentPack> contentPacks = new List<ContentPack>();
+            ContentPacksData contentPacksData = new ContentPacksData() { Timestamp = DateTime.UtcNow };
             foreach (int modId in modIds)
             {
                 var response = await client.GetAsync(new Uri(GetApiAddress(modId)));
@@ -106,7 +106,7 @@ namespace Internal.Web
                         //string imageName = $"{modId}{Path.GetExtension(imageUrl.Segments.Last())}";
                         //await DownloadImage(client, modInfo.PictureUrl, Path.Combine(targetFolder, imageName));
 
-                        contentPacks.Add(new ContentPack()
+                        contentPacksData.ContentPacks.Add(new ContentPack()
                         {
                             Id = modId,
                             ModUrl = GetWebAddress(modId),
@@ -131,9 +131,17 @@ namespace Internal.Web
                 Directory.CreateDirectory(targetFolder);
             }
             Debug.WriteLine($"Saving cache to the following output path: {Path.Combine(Directory.GetCurrentDirectory(), targetFolder, "content-packs.json")}");
-            File.WriteAllText(Path.Combine(targetFolder, "content-packs.json"), JsonSerializer.Serialize(contentPacks, new JsonSerializerOptions() { WriteIndented = true }));
 
-            Debug.WriteLine($"Cached {contentPacks.Count} content packs!");
+            if (contentPacksData.ContentPacks.Count >= 0)
+            {
+                File.WriteAllText(Path.Combine(targetFolder, "content-packs.json"), JsonSerializer.Serialize(contentPacksData, new JsonSerializerOptions() { WriteIndented = true }));
+
+                Debug.WriteLine($"Cached {contentPacksData.ContentPacks.Count} content packs!");
+            }
+            else
+            {
+                Debug.WriteLine($"No content packs cached: List was empty!");
+            }
 
             client.Dispose();
         }

@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.3" PrivateAssets="all" />
+    <PackageReference Include="MudBlazor" Version="6.19.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\css\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj" />
+  </ItemGroup>
+
+	<!-- Task to add cache busting timestamps to scoped css @imports of library css bundles -->
+	<Target Name="CachebustScopedCssImportsTask" AfterTargets="BundleScopedCssFiles" Condition="'@(_ScopedCss)' != ''">
+		<PropertyGroup>
+			<File>$(_ScopedCssOutputFullPath)</File>
+			<Timestamp>$([System.DateTimeOffset]::Now.ToUnixTimeSeconds())</Timestamp>
+		</PropertyGroup>
+		<WriteLinesToFile File="$(File)" Lines="$([System.IO.File]::ReadAllText($(File)).Replace('.bundle.scp.css','.bundle.scp.css?v=$(Timestamp)'))" Overwrite="true" Encoding="UTF-8" />
+	</Target>
+
+</Project>

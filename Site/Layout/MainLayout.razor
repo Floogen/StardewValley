@@ -3,7 +3,7 @@
 @inject NavigationManager Navigation
 
 
-<MudThemeProvider @bind-IsDarkMode="@IsDarkMode" Theme="@_pageTheme" />
+<MudThemeProvider @ref="_mudThemeProvider" @bind-IsDarkMode="@IsDarkMode" Theme="@_pageTheme" />
 
 <MudLayout>
     <CascadingValue Value="this">
@@ -31,16 +31,26 @@
 </MudLayout>
 
 @code {
-    private MudTheme _pageTheme { get; set; }
+    private MudThemeProvider _mudThemeProvider { get; set; } = default!;
+    private MudTheme _pageTheme { get; set; } = default!;
     private bool _drawerOpen = false;
 
-    public bool IsDarkMode { get; set; } = true;
+    public bool IsDarkMode { get; set; }
 
     protected override Task OnInitializedAsync()
     {
         ResetTheme();
 
         return base.OnInitializedAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            IsDarkMode = await _mudThemeProvider.GetSystemPreference();
+            StateHasChanged();
+        }
     }
 
     public Palette GetCurrentPalette()

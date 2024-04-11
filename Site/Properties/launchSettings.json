@@ -13,7 +13,6 @@
     "https": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "fashion-sense",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

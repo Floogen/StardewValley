@@ -22,6 +22,14 @@ nexusModsApiKey = config["nexusModsApiKey"];
 // Establish the Nexus Mods link
 var nexusMods = new NexusMods(nexusModsApiKey, "stardewvalley");
 
+// Set the output path for Alternative Textures
+string alternativeTexturesOutputPath = Path.Combine("resources", "alternative-textures");
+#if DEBUG
+alternativeTexturesOutputPath = "..\\..\\..\\..\\Site\\wwwroot\\resources\\alternative-textures";
+#endif
+
+// Cache the content mod data for Alternative Textures
+await nexusMods.GetAndCacheContentPacks(9246, alternativeTexturesOutputPath);
 
 
 // Set the output path for Fashion Sense

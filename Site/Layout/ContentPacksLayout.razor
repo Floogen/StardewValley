@@ -9,77 +9,84 @@
 @using Site.Utilities.Extensions
 
 
-<MudContainer id="another_unique_identifier" Class="mt-4" MaxWidth="MaxWidth.False">
-    <MudScrollToTop @ref="_scrollToTop">
-        <MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.ArrowCircleUp" />
-    </MudScrollToTop>
-    <MudItem>
-        <MudStack Class="mb-6" Justify="Justify.Center" AlignItems="AlignItems.Center" Row="true">
-            <MudPaper Class="flex-none mud-theme-transparent" Width="50%" Elevation="0">
-                <MudTextField @bind-Value="_searchText" OnKeyUp="UpdateFilter" Label="Search" Variant="Variant.Outlined" Immediate="true" ShrinkLabel />
-            </MudPaper>
-            <MudPaper Class="flex-none mud-theme-transparent" Width="256px" Elevation="0">
-                <MudSelect T="SortMethod" Value="_sortMethod" ValueChanged="@(e => UpdateSortMethod(e))" OnAdornmentClick="ChangeSortDirection" Label="Sort Method" AdornmentIcon="@(_sortDirection is SortDirection.Ascending ? Icons.Material.Sharp.ArrowUpward : Icons.Material.Sharp.ArrowDownward)" AdornmentColor="Color.Primary">
-                    @foreach (SortMethod item in Enum.GetValues(typeof(SortMethod)))
-                    {
-                        <MudSelectItem Value="@item">
-                            <span style=@("color: " + Layout.GetCurrentPalette().White)>@item.GetDescription()</span>
-                        </MudSelectItem>
-                    }
-                </MudSelect>
-            </MudPaper>
-        </MudStack>
-    </MudItem>
-    <MudGrid Justify="Justify.Center">
-        <MudItem xs="12" sm="6" md="12" lg="12" xl="16">
+<MudLayout>
+    <CascadingValue Value="this">
+        <PageTitle>@Title</PageTitle>
+        <SectionContent SectionName="page-title">@Title</SectionContent>
+        <MudContainer id="another_unique_identifier" Class="mt-4" MaxWidth="MaxWidth.False">
+            <MudScrollToTop @ref="_scrollToTop">
+                <MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.ArrowCircleUp" />
+            </MudScrollToTop>
+            <MudItem>
+                <MudStack Class="mb-6" Justify="Justify.Center" AlignItems="AlignItems.Center" Row="true">
+                    <MudPaper Class="flex-none mud-theme-transparent" Width="50%" Elevation="0">
+                        <MudTextField @bind-Value="_searchText" OnKeyUp="UpdateFilter" Label="Search" Variant="Variant.Outlined" Immediate="true" ShrinkLabel />
+                    </MudPaper>
+                    <MudPaper Class="flex-none mud-theme-transparent" Width="256px" Elevation="0">
+                        <MudSelect T="SortMethod" Value="_sortMethod" ValueChanged="@(e => UpdateSortMethod(e))" OnAdornmentClick="ChangeSortDirection" Label="Sort Method" AdornmentIcon="@(_sortDirection is SortDirection.Ascending ? Icons.Material.Sharp.ArrowUpward : Icons.Material.Sharp.ArrowDownward)" AdornmentColor="Color.Primary">
+                            @foreach (SortMethod item in Enum.GetValues(typeof(SortMethod)))
+                            {
+                                <MudSelectItem Value="@item">
+                                    <span style=@("color: " + MainLayout!.GetCurrentPalette().White)>@item.GetDescription()</span>
+                                </MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudPaper>
+                </MudStack>
+            </MudItem>
             <MudGrid Justify="Justify.Center">
-                @if (_pageToContentPacks.ContainsKey(_selectedPage))
-                {
-                    @foreach (var contentPack in _pageToContentPacks[_selectedPage])
-                    {
-                        <div style="position:relative;">
-                            <MudCard title="@($"{contentPack.ModName} by {contentPack.Author}")" Style="width:325px; height:325px;" Class="ma-2">
-                                <MudImage Width=325 Height=@(contentPack.ModName?.Length >= 50 ? 225 : 250) ObjectFit="ObjectFit.Contain" Src="@contentPack.ImagePath" Alt="..." Elevation="0" Class="rounded-lg" Style="@("background-color: " + Layout.GetCurrentPalette().Primary.ColorLighten(0.05))" @onmousedown="@(e => OpenPageInNewTab(contentPack.ModUrl))" />
-                                <MudText Align="Align.Center" Typo="Typo.subtitle2">@contentPack.ModName</MudText>
-                                <div Class="d-flex align-center justify-center">
-                                    <MudIcon Icon="@Icons.Material.Outlined.AccountCircle" Size="Size.Small" />&nbsp;@(contentPack.Author)
-                                    <br />
-                                    <MudText Class="d-flex align-center justify-center" Style="position:absolute; margin-left: auto; margin-right: auto; left: 0; right: 0; bottom: 10px; text-align: center;" Typo="Typo.caption">
-                                        <MudIcon Icon="@(_sortMethod is SortMethod.CreatedTimestamp ? Icons.Material.Outlined.Create : Icons.Material.Outlined.Update)" Size="Size.Small" />&nbsp;@($"{(_sortMethod is SortMethod.CreatedTimestamp ? contentPack.CreatedTimestamp.ToShortDateString() : contentPack.LastUpdated.ToShortDateString())}")&nbsp;
-                                    </MudText>
-                                    <br />
-                                    <MudText Class="d-flex align-center justify-start" Style="position:absolute; margin-left: 25px; margin-right: auto; left: 0; right: 0; bottom: 10px; text-align: center;" Typo="Typo.caption">
-                                        <MudIcon Icon="@Icons.Material.Outlined.ThumbUp" Size="Size.Small" />&nbsp;@(contentPack.Endorsements)&nbsp;
-                                    </MudText>
-                                    <MudText Class="d-flex align-center justify-end" Style="position:absolute; margin-left: auto; margin-right: 25px; left: 0; right: 0; bottom: 10px; text-align: center;" Typo="Typo.caption">
-                                        <MudIcon Icon="@Icons.Material.Outlined.FileDownload" Size="Size.Small" />&nbsp;@(contentPack.UniqueDownloads)&nbsp;
-                                    </MudText>
+                <MudItem xs="12" sm="6" md="12" lg="12" xl="16">
+                    <MudGrid Justify="Justify.Center">
+                        @if (_pageToContentPacks.ContainsKey(_selectedPage))
+                        {
+                            @foreach (var contentPack in _pageToContentPacks[_selectedPage])
+                            {
+                                <div style="position:relative;">
+                                    <MudCard title="@($"{contentPack.ModName} by {contentPack.Author}")" Style="width:325px; height:325px;" Class="ma-2">
+                                        <MudImage Width=325 Height=@(contentPack.ModName?.Length >= 50 ? 225 : 250) ObjectFit="ObjectFit.Contain" Src="@contentPack.ImagePath" Alt="..." Elevation="0" Class="rounded-lg" Style="@("background-color: " + MainLayout.GetCurrentPalette().Primary.ColorLighten(0.05))" @onmousedown="@(e => OpenPageInNewTab(contentPack.ModUrl))" />
+                                        <MudText Align="Align.Center" Typo="Typo.subtitle2">@contentPack.ModName</MudText>
+                                        <div Class="d-flex align-center justify-center">
+                                            <MudIcon Icon="@Icons.Material.Outlined.AccountCircle" Size="Size.Small" />&nbsp;@(contentPack.Author)
+                                            <br />
+                                            <MudText Class="d-flex align-center justify-center" Style="position:absolute; margin-left: auto; margin-right: auto; left: 0; right: 0; bottom: 10px; text-align: center;" Typo="Typo.caption">
+                                                <MudIcon Icon="@(_sortMethod is SortMethod.CreatedTimestamp ? Icons.Material.Outlined.Create : Icons.Material.Outlined.Update)" Size="Size.Small" />&nbsp;@($"{(_sortMethod is SortMethod.CreatedTimestamp ? contentPack.CreatedTimestamp.ToShortDateString() : contentPack.LastUpdated.ToShortDateString())}")&nbsp;
+                                            </MudText>
+                                            <br />
+                                            <MudText Class="d-flex align-center justify-start" Style="position:absolute; margin-left: 25px; margin-right: auto; left: 0; right: 0; bottom: 10px; text-align: center;" Typo="Typo.caption">
+                                                <MudIcon Icon="@Icons.Material.Outlined.ThumbUp" Size="Size.Small" />&nbsp;@(contentPack.Endorsements)&nbsp;
+                                            </MudText>
+                                            <MudText Class="d-flex align-center justify-end" Style="position:absolute; margin-left: auto; margin-right: 25px; left: 0; right: 0; bottom: 10px; text-align: center;" Typo="Typo.caption">
+                                                <MudIcon Icon="@Icons.Material.Outlined.FileDownload" Size="Size.Small" />&nbsp;@(contentPack.UniqueDownloads)&nbsp;
+                                            </MudText>
+                                        </div>
+                                    </MudCard>
                                 </div>
-                            </MudCard>
-                        </div>
-                    }
-                }
+                            }
+                        }
+                    </MudGrid>
+                </MudItem>
+                <MudPagination Class="pb-4" Style="position:relative; top:25px;" Rectangular="true" Variant="Variant.Outlined" Count="@_pageToContentPacks.Keys.Count" SelectedChanged="@(e => ChangeSelectedPage(e - 1))" />
             </MudGrid>
-        </MudItem>
-        <MudPagination Class="pb-4" Style="position:relative; top:25px;" Rectangular="true" Variant="Variant.Outlined" Count="@_pageToContentPacks.Keys.Count" SelectedChanged="@(e => ChangeSelectedPage(e - 1))" />
-    </MudGrid>
-</MudContainer>
-@Body
+        </MudContainer>
+        @Body
+    </CascadingValue>
+</MudLayout>
 
 @code {
     [CascadingParameter]
-    public MainLayout Layout { get; set; }
+    public MainLayout? MainLayout { get; set; }
+
+    public string Title { get; set; } = "Template";
+
+    private List<ContentPack> ContentPacks { get; set; } = new List<ContentPack>();
 
     private MudScrollToTop _scrollToTop;
 
     private const int MAX_CONTENT_PACKS_PER_PAGE = 30;
-
-    private List<ContentPack>? _contentPacks;
-    private List<IgnoredMod>? _ignoredMods;
     private Dictionary<int, List<ContentPack>> _pageToContentPacks = new Dictionary<int, List<ContentPack>>() { { 0, new List<ContentPack>() } };
     private int _selectedPage;
 
-    private string _searchText;
+    private string _searchText = string.Empty;
     private SortDirection _sortDirection = SortDirection.Descending;
     private SortMethod _sortMethod = SortMethod.CreatedTimestamp;
     public enum SortMethod
@@ -95,19 +102,21 @@
         ModName
     }
 
-    protected override async Task OnInitializedAsync()
+    public async Task RefreshContentPacks(string folderPath)
     {
-        var random = new Random();
-
-        // Override the base theme
-        Layout.SetTheme(new FashionSenseTheme());
-
-        _contentPacks = await Http.GetFromJsonAsync<List<ContentPack>>(Path.Combine("resources", "fashion-sense", "content-packs.json"));
-
-        _ignoredMods = await Http.GetFromJsonAsync<List<IgnoredMod>>(Path.Combine("resources", "fashion-sense", "ignore-list.json"));
-        if (_ignoredMods is not null && _contentPacks is not null)
+        // Get the content packs
+        var contentPacks = await Http.GetFromJsonAsync<List<ContentPack>>(Path.Combine(folderPath, "content-packs.json"));
+        if (contentPacks is null)
         {
-            _contentPacks = _contentPacks.Where(c => _ignoredMods is null || _ignoredMods.Any(i => i.Id == c.Id) is false).ToList();
+            // TODO: Log error
+            return;
+        }
+        ContentPacks = contentPacks;
+
+        var ignoredMods = await Http.GetFromJsonAsync<List<IgnoredMod>>(Path.Combine(folderPath, "ignore-list.json"));
+        if (ignoredMods is not null && ContentPacks is not null)
+        {
+            ContentPacks = ContentPacks.Where(c => ignoredMods is null || ignoredMods.Any(i => i.Id == c.Id) is false).ToList();
         }
 
         UpdateFilter();
@@ -123,14 +132,14 @@
     {
         _selectedPage = 0;
         _pageToContentPacks.Clear();
-        if (_contentPacks is null)
+        if (ContentPacks is null)
         {
             // TODO: Log error
             return;
         }
 
         // Sort the content packs
-        var sortedContentPacks = SortContentPacksByMethod(_contentPacks.Where(c => c.HasAdultContent is false).Where(c => string.IsNullOrEmpty(_searchText) || string.IsNullOrEmpty(c.ModName) || c.ModName.Contains(_searchText, StringComparison.OrdinalIgnoreCase)));
+        var sortedContentPacks = SortContentPacksByMethod(ContentPacks.Where(c => c.HasAdultContent is false).Where(c => string.IsNullOrEmpty(_searchText) || string.IsNullOrEmpty(c.ModName) || c.ModName.Contains(_searchText, StringComparison.OrdinalIgnoreCase)));
 
         // Iterate through the sorted packs
         int currentPage = 0;

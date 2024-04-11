@@ -71,7 +71,7 @@
         </MudContainer>
         @Body
     </CascadingValue>
-    <MudText Color="Color.Secondary" Class="mt-8" Style="display: table; text-align: center; margin-left: auto; margin-right: auto;" Typo="Typo.caption" Align="Align.Center">@($"Last Updated: {(_contentPackGrabTimestamp is null ? "Unknown" : _contentPackGrabTimestamp.ToString())}")</MudText>
+    <MudText Color="Color.Secondary" Class="mt-8" Style="display: table; text-align: center; margin-left: auto; margin-right: auto;" Typo="Typo.caption" Align="Align.Center">@($"Last Updated: {(_contentPackGrabTimestamp is null ? "Unknown" : _contentPackGrabTimestamp.ToString())} (UTC)")</MudText>
 </MudLayout>
 
 @code {

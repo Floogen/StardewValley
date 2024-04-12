@@ -1,7 +1,6 @@
 ﻿using Common.Models;
 using HtmlAgilityPack;
 using Internal.Models.NexusMods;
-using System.Diagnostics;
 using System.Text.Json;
 
 namespace Internal.Web
@@ -34,11 +33,11 @@ namespace Internal.Web
         public async Task GetAndCacheContentPacks(int frameworkId, string outputPath)
         {
             // Get the content packs associated to the framework
-            Debug.WriteLine($"Grabbing content packs associated with the framework ID {frameworkId}...");
+            Console.WriteLine($"Grabbing content packs associated with the framework ID {frameworkId}...");
             var contentPackIds = GetContentPacksFromMod(GetWebAddress(frameworkId));
 
             // Cache the data for the content packs
-            Debug.WriteLine($"Caching {contentPackIds.Count} content packs associated with the framework ID {frameworkId}...");
+            Console.WriteLine($"Caching {contentPackIds.Count} content packs associated with the framework ID {frameworkId}...");
             await CacheContentPackData(contentPackIds, outputPath);
         }
 
@@ -57,7 +56,7 @@ namespace Internal.Web
                 }
                 catch
                 {
-                    Debug.WriteLine("Failed to get previousHeader via PreviousSibling!");
+                    Console.WriteLine("Failed to get previousHeader via PreviousSibling!");
                     continue;
                 }
 
@@ -91,12 +90,12 @@ namespace Internal.Web
 
                     if (modInfo is null)
                     {
-                        Debug.WriteLine($"Failed to get ModInfo for {_gameName}/{modId}");
+                        Console.WriteLine($"Failed to get ModInfo for {_gameName}/{modId}");
                         continue;
                     }
                     else if (string.IsNullOrEmpty(modInfo.PictureUrl))
                     {
-                        Debug.WriteLine($"The mod {_gameName}/{modId} has no thumbnail!");
+                        Console.WriteLine($"The mod {_gameName}/{modId} has no thumbnail!");
                         continue;
                     }
 
@@ -120,7 +119,7 @@ namespace Internal.Web
                             CreatedTimestamp = modInfo.CreatedTimestamp
                         });
 
-                        Debug.WriteLine($"Successfully parsed [{modInfo.Name}] ({modId})");
+                        Console.WriteLine($"Successfully parsed [{modInfo.Name}] ({modId})");
                     }
                 }
             }
@@ -130,17 +129,17 @@ namespace Internal.Web
             {
                 Directory.CreateDirectory(targetFolder);
             }
-            Debug.WriteLine($"Saving cache to the following output path: {Path.Combine(Directory.GetCurrentDirectory(), targetFolder, "content-packs.json")}");
+            Console.WriteLine($"Saving cache to the following output path: {Path.Combine(Directory.GetCurrentDirectory(), targetFolder, "content-packs.json")}");
 
             if (contentPacksData.ContentPacks.Count >= 0)
             {
                 File.WriteAllText(Path.Combine(targetFolder, "content-packs.json"), JsonSerializer.Serialize(contentPacksData, new JsonSerializerOptions() { WriteIndented = true }));
 
-                Debug.WriteLine($"Cached {contentPacksData.ContentPacks.Count} content packs!");
+                Console.WriteLine($"Cached {contentPacksData.ContentPacks.Count} content packs!");
             }
             else
             {
-                Debug.WriteLine($"No content packs cached: List was empty!");
+                Console.WriteLine($"No content packs cached: List was empty!");
             }
 
             client.Dispose();

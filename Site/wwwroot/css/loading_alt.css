@@ -1,0 +1,75 @@
+﻿/* Modified from https://codepen.io/arron21/pen/jwRxJm */
+
+.loader {
+    width: 200px;
+    height: 200px;
+    padding: 10px;
+    background: #ddd;
+    border: 5px solid #444;
+    display: flex;
+    flex-wrap: wrap;
+    transform: rotate(45deg);
+}
+
+.loader__square {
+    height: 80px;
+    width: 80px;
+    border: 5px solid #444;
+    margin: 0 auto;
+}
+
+.loader .square--1 {
+    -webkit-animation: backgroundChange infinite 4s;
+    animation: backgroundChange infinite 4s;
+}
+
+.loader .square--2 {
+    -webkit-animation: backgroundChange infinite 4s 1s;
+    animation: backgroundChange infinite 4s 1s;
+}
+
+.loader .square--3 {
+    -webkit-animation: backgroundChange infinite 4s 3s;
+    animation: backgroundChange infinite 4s 3s;
+}
+
+.loader .square--4 {
+    -webkit-animation: backgroundChange infinite 4s 2s;
+    animation: backgroundChange infinite 4s 2s;
+}
+
+@-webkit-keyframes backgroundChange {
+    25% {
+        background: transparent;
+    }
+
+    50% {
+        background: #444;
+    }
+
+    75% {
+        background: transparent;
+    }
+
+    100% {
+        background: transparent;
+    }
+}
+
+@keyframes backgroundChange {
+    25% {
+        background: transparent;
+    }
+
+    50% {
+        background: #444;
+    }
+
+    75% {
+        background: transparent;
+    }
+
+    100% {
+        background: transparent;
+    }
+}

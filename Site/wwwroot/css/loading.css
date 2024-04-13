@@ -1,0 +1,106 @@
+﻿/*
+Copyright (c) 2024 by Elena Nazarova (https://codepen.io/nazarelen/pen/zKwGdQ)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+@keyframes wave {
+    0% {
+        opacity: 0;
+        transform: translateY(15px)
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(0)
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-15px)
+    }
+}
+
+.loader ul {
+    margin: 0 0 10px 0;
+    padding: 0;
+    list-style: none;
+    width: 60px;
+    text-align: center;
+    animation: wave 2.5s infinite linear;
+    animation-fill-mode: forwards;
+}
+
+.loader li {
+    display: inline-block;
+    background: #FAF1D9;
+    height: 30px;
+    width: 9px;
+    border-radius: 0 100%;
+    transform: rotate(12deg);
+}
+
+.cup {
+    background: #F2E3B4;
+    width: 60px;
+    height: 54px;
+    border-radius: 0 0 50% 50%;
+    position: relative;
+}
+
+    .cup:before {
+        content: "";
+        position: absolute;
+        width: 66px;
+        height: 20px;
+        border-radius: 50%;
+        background: inherit;
+        left: -3px;
+        top: -10px;
+    }
+
+    .cup:after {
+        content: "";
+        position: absolute;
+        width: 56px;
+        height: 12px;
+        border-radius: 50%;
+        background: #3A2F28;
+        left: 2px;
+        top: -6px;
+    }
+
+.loader span {
+    background: #F2E3B4;
+    width: 13px;
+    height: 20px;
+    position: absolute;
+    right: -13px;
+    top: 10px;
+    border-radius: 0 50% 50% 0;
+}
+
+    .loader span:before {
+        content: "";
+        position: absolute;
+        top: 4px;
+        left: 0;
+        background: #212529;
+        width: 10px;
+        height: 12px;
+        border-radius: 0 50% 50% 0;
+    }
+
+    .loader span:after {
+        content: "";
+        position: absolute;
+        top: 40px;
+        left: -50px;
+        width: 40px;
+        height: 8px;
+        border-radius: 50%;
+    }

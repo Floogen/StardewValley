@@ -45,9 +45,9 @@
                                         <MudLink Href="@contentPack.ModUrl">
                                             <MudImage Width=325 Height=@(contentPack.ModName?.Length >= 50 ? 225 : 250) ObjectFit="ObjectFit.Contain" Src="@contentPack.ImagePath" Alt="..." Elevation="0" Class="rounded-lg" Style="@("background-color: " + MainLayout.GetCurrentPalette().Secondary)" />
                                         </MudLink>
-                                        <MudText Align="Align.Center" Typo="Typo.subtitle2">@contentPack.ModName</MudText>
+                                        <MudText Align="Align.Center" Typo="Typo.subtitle2">@contentPack.GetModNameForTitle()</MudText>
                                         <div Class="d-flex align-center justify-center">
-                                            <MudIcon Icon="@Icons.Material.Outlined.AccountCircle" Size="Size.Small" />&nbsp;@(contentPack.Author)
+                                            <MudIcon Icon="@Icons.Material.Outlined.AccountCircle" Size="Size.Small" />&nbsp;@(contentPack.GetAuthorForTitle())
                                             <br />
                                             <MudText Class="d-flex align-center justify-center" Style="position:absolute; margin-left: auto; margin-right: auto; left: 0; right: 0; bottom: 10px; text-align: center;" Typo="Typo.caption">
                                                 <MudIcon Icon="@(_sortMethod is SortMethod.CreatedTimestamp ? Icons.Material.Outlined.Create : Icons.Material.Outlined.Update)" Size="Size.Small" />&nbsp;@($"{(_sortMethod is SortMethod.CreatedTimestamp ? contentPack.CreatedTimestamp.ToShortDateString() : contentPack.LastUpdated.ToShortDateString())}")&nbsp;

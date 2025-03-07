@@ -38,4 +38,4 @@ jobs:
         folder: "resources"
         target-folder: "resources"
         clean: false
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.DEPLOY_TOKEN }}

@@ -25,7 +25,8 @@ jobs:
       uses: JamesIves/github-pages-deploy-action@v4
       with:
         git-config-name: Scribe-Bot
+        git-config-email: 202338101+Scribe-Bot@users.noreply.github.com
         branch: gh-pages-test
         folder: "resources"
-        target-folder: "test"
+        target-folder: "123"
         token: ${{ secrets.DEPLOY_TOKEN }}

@@ -22,7 +22,7 @@ jobs:
       uses: JamesIves/github-pages-deploy-action@v4
       with:
         branch: gh-pages
-        folder: "resources"
+        folder: "Site/wwwroot/resources"
         target-folder: "resources"
         clean: false
         token: ${{ secrets.DEPLOY_TOKEN }}

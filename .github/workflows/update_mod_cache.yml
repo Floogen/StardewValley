@@ -26,6 +26,5 @@ jobs:
       with:
         branch: gh-pages-test
         folder: "resources"
-        target-folder: "resources"
-        force: false
+        target-folder: "test"
         token: ${{ secrets.DEPLOY_TOKEN }}

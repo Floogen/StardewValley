@@ -13,7 +13,9 @@ env:
   OUTPUT_PATH: "Output"
 
 permissions:
+  actions: write
   contents: write
+  deployments: write
 
 jobs:
   build:

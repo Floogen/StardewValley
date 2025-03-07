@@ -18,12 +18,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: gh-pages-test
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4
       with:
         branch: gh-pages
-        folder: "."
+        folder: "resources"
         target-folder: "resources"
         clean: false
         token: ${{ secrets.DEPLOY_TOKEN }}
-        dry-run: true

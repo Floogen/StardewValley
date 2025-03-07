@@ -12,11 +12,6 @@ env:
   WORKING_DIRECTORY: "Internal"
   OUTPUT_PATH: "Output"
 
-permissions:
-  actions: write
-  contents: write
-  deployments: write
-
 jobs:
   build:
 
@@ -29,6 +24,7 @@ jobs:
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4
       with:
+        git-config-name: Scribe-Bot
         branch: gh-pages-test
         folder: "resources"
         target-folder: "test"

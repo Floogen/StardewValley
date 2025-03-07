@@ -20,12 +20,12 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
-        ref: gh-pages-test
+        ref: gh-pages
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4
       with:
-        branch: gh-pages
+        branch: gh-pages-test
         folder: "resources"
         target-folder: "resources"
-        clean: false
+        clean: true
         token: ${{ secrets.DEPLOY_TOKEN }}

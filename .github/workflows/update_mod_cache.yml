@@ -20,13 +20,24 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
-        ref: gh-pages
+        ref: stable
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore dependencies
+      run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
+    - name: Build
+      run: dotnet build "${{ env.WORKING_DIRECTORY }}" --no-restore
+    - name: Run
+      run: dotnet run --project "${{ env.WORKING_DIRECTORY }}\${{ env.PROJECT_FILE }}" --no-build --configuration ${{ env.CONFIGURATION }} -- "${{ secrets.NEXUS_API_KEY }}"
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4
       with:
         git-config-name: Scribe-Bot
         git-config-email: 202338101+Scribe-Bot@users.noreply.github.com
-        branch: gh-pages-test
+        branch: gh-pages
         folder: "resources"
-        target-folder: "123"
+        target-folder: "resources"
+        clean: false
         token: ${{ secrets.DEPLOY_TOKEN }}

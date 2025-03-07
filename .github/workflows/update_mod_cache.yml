@@ -12,6 +12,9 @@ env:
   WORKING_DIRECTORY: "Internal"
   OUTPUT_PATH: "Output"
 
+permissions:
+  contents: write
+
 jobs:
   build:
 

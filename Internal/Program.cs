@@ -2,6 +2,10 @@
 using Microsoft.Extensions.Configuration;
 
 
+const string ALTERNATIVE_TEXTURES_MOD_UID = "5596342395934";
+const string FASHION_SENSE_MOD_UID = "5596342396657";
+
+
 // Build the config
 var config = new ConfigurationBuilder()
     .AddUserSecrets<Program>()
@@ -20,7 +24,7 @@ nexusModsApiKey = config["nexusModsApiKey"];
 #endif
 
 // Establish the Nexus Mods link
-var nexusMods = new NexusMods(nexusModsApiKey, "stardewvalley");
+var nexusMods = new NexusModsIntegration(nexusModsApiKey, "stardewvalley");
 
 // Set the output path for Alternative Textures
 string alternativeTexturesOutputPath = Path.Combine("resources", "alternative-textures");
@@ -29,7 +33,7 @@ alternativeTexturesOutputPath = "..\\..\\..\\..\\Site\\wwwroot\\resources\\alter
 #endif
 
 // Cache the content mod data for Alternative Textures
-await nexusMods.GetAndCacheContentPacks(9246, alternativeTexturesOutputPath);
+await nexusMods.GetAndCacheContentPacks(ALTERNATIVE_TEXTURES_MOD_UID, alternativeTexturesOutputPath);
 
 
 // Set the output path for Fashion Sense
@@ -39,4 +43,4 @@ fashionSenseOutputPath = "..\\..\\..\\..\\Site\\wwwroot\\resources\\fashion-sens
 #endif
 
 // Cache the content mod data for Fashion Sense
-await nexusMods.GetAndCacheContentPacks(9969, fashionSenseOutputPath);
+await nexusMods.GetAndCacheContentPacks(FASHION_SENSE_MOD_UID, fashionSenseOutputPath);

@@ -1,0 +1,23 @@
+query GetFrameworkContentPacks($id: ID!, $count: Int!, $offset: Int!) {
+    modsByUid(uids: [$id]) {
+        facetsData
+        nodesCount
+        nodesFilter
+        totalCount
+        nodes {
+            modId
+            name
+            modRequirements {
+                modsRequiringThisMod(count: $count, offset: $offset) {
+                    nodesCount
+                    totalCount
+                    nodes {
+                        modId
+                    }
+                }
+            }
+            author
+            uid
+        }
+    }
+}

@@ -50,7 +50,7 @@
                                             <MudIcon Icon="@Icons.Material.Outlined.AccountCircle" Size="Size.Small" />&nbsp;@(contentPack.GetAuthorForTitle())
                                             <br />
                                             <MudText Class="d-flex align-center justify-center" Style="position:absolute; margin-left: auto; margin-right: auto; left: 0; right: 0; bottom: 10px; text-align: center;" Typo="Typo.caption">
-                                                <MudIcon Icon="@(_sortMethod is SortMethod.CreatedTimestamp ? Icons.Material.Outlined.Create : Icons.Material.Outlined.Update)" Size="Size.Small" />&nbsp;@($"{(_sortMethod is SortMethod.CreatedTimestamp ? contentPack.CreatedTimestamp.ToShortDateString() : contentPack.LastUpdated.ToShortDateString())}")&nbsp;
+                                                <MudIcon Icon="@(_sortMethod is SortMethod.CreatedTimestamp ? Icons.Material.Outlined.Create : Icons.Material.Outlined.Update)" Size="Size.Small" />&nbsp;@($"{(_sortMethod is SortMethod.CreatedTimestamp ? contentPack.CreatedTimestamp.LocalDateTime.ToShortDateString() : contentPack.LastUpdated.LocalDateTime.ToShortDateString())}")&nbsp;
                                             </MudText>
                                             <br />
                                             <MudText Class="d-flex align-center justify-start" Style="position:absolute; margin-left: 25px; margin-right: auto; left: 0; right: 0; bottom: 10px; text-align: center;" Typo="Typo.caption">

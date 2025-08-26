@@ -8,8 +8,8 @@
         public int UniqueDownloads { get; set; }
         public int Endorsements { get; set; }
         public bool HasAdultContent { get; set; }
-        public DateTime LastUpdated { get; set; }
-        public DateTime CreatedTimestamp { get; set; }
+        public DateTimeOffset LastUpdated { get; set; }
+        public DateTimeOffset CreatedTimestamp { get; set; }
         public string? ImagePath { get; set; }
         public string? ModUrl { get; set; }
 

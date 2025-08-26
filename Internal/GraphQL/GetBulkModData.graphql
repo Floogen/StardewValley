@@ -1,0 +1,17 @@
+query GetBulkModData($ids: [CompositeIdInput!]!, $count: Int!, $offset: Int!) {
+    legacyMods(ids: $ids, count: $count, offset: $offset) {
+        nodesCount
+        nodes {
+            modId
+            pictureUrl
+            name
+            author
+            downloads
+            endorsements
+            adult
+            adultContent
+            updatedAt
+            createdAt
+        }
+    }
+}

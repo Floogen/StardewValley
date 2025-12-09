@@ -30,7 +30,7 @@ jobs:
     - name: Build
       run: dotnet build "${{ env.WORKING_DIRECTORY }}" --no-restore
     - name: Run
-      run: dotnet run --project "${{ env.WORKING_DIRECTORY }}\${{ env.PROJECT_FILE }}" --no-build --configuration ${{ env.CONFIGURATION }} -- "${{ secrets.NEXUS_API_KEY }}"
+      run: dotnet run --project "${{ env.WORKING_DIRECTORY }}" --no-build --configuration ${{ env.CONFIGURATION }} -- "${{ secrets.NEXUS_API_KEY }}"
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4
       with:

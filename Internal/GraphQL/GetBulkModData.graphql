@@ -11,7 +11,8 @@ query GetBulkModData($ids: [CompositeIdInput!]!, $count: Int!, $offset: Int!) {
             adult
             adultContent
             updatedAt
-            createdAt
+            createdAt,
+            status
         }
     }
 }

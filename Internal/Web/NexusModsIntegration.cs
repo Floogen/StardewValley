@@ -120,6 +120,11 @@ namespace Internal.Web
                     Console.WriteLine($"The mod {GetWebAddress(contentPack.ModId)} has no thumbnail!");
                     continue;
                 }
+                else if (contentPack.Status.Equals("removed", StringComparison.OrdinalIgnoreCase))
+                {
+                    Console.WriteLine($"The mod {GetWebAddress(contentPack.ModId)} was removed!");
+                    continue;
+                }
 
                 contentPacks.Add(new ContentPack()
                 {

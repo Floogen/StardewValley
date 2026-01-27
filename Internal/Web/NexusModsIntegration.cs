@@ -120,7 +120,7 @@ namespace Internal.Web
                     Console.WriteLine($"The mod {GetWebAddress(contentPack.ModId)} has no thumbnail!");
                     continue;
                 }
-                else if (contentPack.Status.Equals("removed", StringComparison.OrdinalIgnoreCase))
+                else if (WasContentPackDeleted(contentPack.Status))
                 {
                     Console.WriteLine($"The mod {GetWebAddress(contentPack.ModId)} was removed!");
                     continue;
@@ -149,6 +149,11 @@ namespace Internal.Web
             }
 
             return contentPacks;
+        }
+
+        private bool WasContentPackDeleted(string status)
+        {
+            return status.Equals("removed", StringComparison.OrdinalIgnoreCase) || status.Equals("wastebinned", StringComparison.OrdinalIgnoreCase);
         }
 
         public void CacheContentPackData(List<ContentPack> contentPacks, string targetFolder, string frameworkId, int offset = 0)
